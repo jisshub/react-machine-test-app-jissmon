@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Pagination } from 'react-bootstrap';
 import { fetchData } from '../../api/user';
 import { UserData } from '../../models/userTypes';
+import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
 import './styles.css';
 
 const UserTable: React.FC = () => {
@@ -42,9 +43,9 @@ const UserTable: React.FC = () => {
         }));
     };
 
-    const getSortSymbol = (field: keyof UserData) => {
-        if (sortField !== field) return;
-        return sortOrder === 'asc' ? '↑' : '↓';
+    const getSortIcon = (field: keyof UserData) => {
+        if (sortField !== field) return <FaSort />;
+        return sortOrder === 'asc' ? <FaSortUp /> : <FaSortDown />;
     };
     
     const displayedData = users.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
@@ -59,21 +60,21 @@ const UserTable: React.FC = () => {
                             style={{ cursor: 'pointer' }} 
                             onClick={() => handleSort('id')}>
                             id 
-                            {getSortSymbol('id')}
+                            {getSortIcon('id')}
                         </th>
                         <th 
                             style={{ cursor: 'pointer' }} 
                             onClick={() => handleSort('first_name')}>
                             first_name 
-                            {getSortSymbol('first_name')}
+                            {getSortIcon('first_name')}
                         </th>
                         <th>middle_name</th>
                         <th>last_name</th>
-                        <th 
+                        <th
                             style={{ cursor: 'pointer' }} 
                             onClick={() => handleSort('email_id')}>
                             email_id 
-                            {getSortSymbol('email_id')}
+                            {getSortIcon('email_id')}
                         </th>
                         <th>mobile_no</th>
                         <th>dob</th>
