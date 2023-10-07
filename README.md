@@ -2,7 +2,7 @@
 
 ## Table of Contents
 
-- [Installation](#instllation)
+- [Installation](#installation)
 - [Tools and Technologies](#tools-and-technologies)
 - [Functionality](#functionality)
 
