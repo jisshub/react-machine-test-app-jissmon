@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Table, Pagination } from 'react-bootstrap';
 import { fetchData } from '../../api/user';
 import { UserData } from '../../models/userTypes';
-import './styles.css'
+import './styles.css';
 
 const UserTable: React.FC = () => {
     const [users, setUsers] = useState<UserData[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const itemsPerPage = 5;
+    const [sortField, setSortField] = useState<string | null>(null);
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+    const itemsPerPage = 6;
 
     useEffect(() => {
         const retrieveData = async () => {
@@ -17,8 +19,30 @@ const UserTable: React.FC = () => {
         retrieveData();
     }, []);
 
-    const displayedData = users.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    const handleSort = (field: keyof UserData) => {
+        if (sortField === field) {
+            setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+        } else {
+            setSortField(field);
+            setSortOrder('asc');
+        }
     
+        setUsers(users.slice().sort((a, b) => {
+            const valA = a[field];
+            const valB = b[field];
+    
+            if (typeof valA === 'string' && typeof valB === 'string') {
+                if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
+                if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
+            } else if (typeof valA === 'number' && typeof valB === 'number') {
+                return sortOrder === 'asc' ? valA - valB : valB - valA;
+            }
+    
+            return 0;
+        }));
+    };
+    
+    const displayedData = users.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
     const totalPages = Math.ceil(users.length / itemsPerPage);
 
     return (
@@ -26,11 +50,11 @@ const UserTable: React.FC = () => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>id</th>
-                        <th>first_name</th>
+                        <th onClick={() => handleSort('id')}>id</th>
+                        <th onClick={() => handleSort('first_name')}>first_name</th>
                         <th>middle_name</th>
                         <th>last_name</th>
-                        <th>email_id</th>
+                        <th onClick={() => handleSort('email_id')}>email_id</th>
                         <th>mobile_no</th>
                         <th>dob</th>
                         <th>gender</th>
@@ -51,7 +75,7 @@ const UserTable: React.FC = () => {
                     ))}
                 </tbody>
             </Table>
-            
+
             <Pagination>
                 <Pagination.First onClick={() => setCurrentPage(1)} />
                 <Pagination.Prev onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} />
