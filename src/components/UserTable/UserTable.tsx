@@ -41,6 +41,11 @@ const UserTable: React.FC = () => {
             return 0;
         }));
     };
+
+    const getSortSymbol = (field: keyof UserData) => {
+        if (sortField !== field) return;
+        return sortOrder === 'asc' ? '↑' : '↓';
+    };
     
     const displayedData = users.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
     const totalPages = Math.ceil(users.length / itemsPerPage);
@@ -50,11 +55,26 @@ const UserTable: React.FC = () => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th onClick={() => handleSort('id')}>id</th>
-                        <th onClick={() => handleSort('first_name')}>first_name</th>
+                        <th 
+                            style={{ cursor: 'pointer' }} 
+                            onClick={() => handleSort('id')}>
+                            id 
+                            {getSortSymbol('id')}
+                        </th>
+                        <th 
+                            style={{ cursor: 'pointer' }} 
+                            onClick={() => handleSort('first_name')}>
+                            first_name 
+                            {getSortSymbol('first_name')}
+                        </th>
                         <th>middle_name</th>
                         <th>last_name</th>
-                        <th onClick={() => handleSort('email_id')}>email_id</th>
+                        <th 
+                            style={{ cursor: 'pointer' }} 
+                            onClick={() => handleSort('email_id')}>
+                            email_id 
+                            {getSortSymbol('email_id')}
+                        </th>
                         <th>mobile_no</th>
                         <th>dob</th>
                         <th>gender</th>
