@@ -1,0 +1,22 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+table {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+thead th {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.pagination {
+    margin-top: 20px;
+    justify-content: center;
+}
