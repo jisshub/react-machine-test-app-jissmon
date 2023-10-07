@@ -4,6 +4,7 @@
 
 - [Installation](#instllation)
 - [Tools and Technologies](#tools-and-technologies)
+- [Functionality](#functionality)
 
 ## Installation
 
@@ -27,3 +28,11 @@
 - React
 - React Hooks
 - React Bootstrap
+
+
+## Functionality
+
+- Fetching data from API
+- Displaying data in a table
+- Sorting data by column
+- Pagination
