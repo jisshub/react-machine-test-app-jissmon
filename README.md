@@ -34,5 +34,5 @@
 
 - Fetching data from API
 - Displaying data in a table
-- Sorting data by column
+- Sorting data by column by clicking on the column header
 - Pagination
